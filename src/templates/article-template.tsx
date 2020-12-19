@@ -28,11 +28,12 @@ type Props = {
       }
       authorName: string
       categories: string
+      sponsoringText: string
       footerLink: {
         footerLink: string
       }
       footerNormalText: {
-        footerNormalText:string
+        footerNormalText: string
       }
       footerText: {
         footerText: string
@@ -86,6 +87,7 @@ const ComponentName: React.FC<Props> = ({ data }) => {
   const { artcl } = data
   let aticleBody = null,
     sidebar = null
+
   if (artcl.articleBody) {
     aticleBody = artcl.articleBody.map((section: any, index: any) => {
       if (section.image) {
@@ -151,7 +153,14 @@ const ComponentName: React.FC<Props> = ({ data }) => {
             md={12}
           >
             <Row>
-              <h1 className="article-title">{artcl.title}</h1>
+              <Col className="sponsored" lg={12} md={12} sm={12} xs={12}>
+                <p>
+                  {artcl.sponsoringText !== "#" ? artcl.sponsoringText : null}
+                </p>
+              </Col>
+              <Col className="article-title" lg={12} md={12} sm={12} xs={12}>
+                <h1>{artcl.title}</h1>
+              </Col>
             </Row>
             <Row>
               {aticleBody}
@@ -168,16 +177,7 @@ const ComponentName: React.FC<Props> = ({ data }) => {
             </Row>
           </Col>
           <Col lg={4} md={12}>
-            {/* <Row>
-              <SidebarImages
-                ImageLink={artcl.imageLink}
-                Img={artcl.sidebareImages[0].file.url}
-              />
-            </Row> */}
-            <Row className="img-container">
-              {/* <MoreArticles Articles={artcl.similarArticles} /> */}
-              {sidebar}
-            </Row>
+            <Row className="img-container">{sidebar}</Row>
           </Col>
         </Row>
         <Footer
@@ -203,6 +203,7 @@ export const query = graphql`
         }
       }
       createdAt
+      sponsoringText
       authorBio {
         authorBio
       }
